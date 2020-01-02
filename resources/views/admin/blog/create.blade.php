@@ -42,7 +42,7 @@
                   </div>
                   <div class="form-group">
                     <label>Content</label><br>
-                    <textarea class="description" name="content" style="width:110%">{{ old('content') }}</textarea>
+                    <textarea class="description" name="content">{{ old('content') }}</textarea>
                     @error('content')
                         <span class="text-danger">{{$message}}</span>
                     @enderror
@@ -67,40 +67,46 @@
 @section('script')
 <script src="{{ asset('node_modules/tinymce/tinymce.js') }}"></script>
 <script>
-  var editor_config = {
-      path_absolute : "{{ URL::to('/') }}/",
-      selector: "textarea.description",
-      menubar: false,
-      width: '100%',
-      height: 500,
-      branding: false,
-      plugins: [
+  tinymce.init({
+  selector: 'textarea.description',
+  branding: false,
+  plugins: [
         "advlist autolink lists link image charmap print preview hr anchor pagebreak",
         "searchreplace wordcount visualblocks visualchars code fullscreen",
         "insertdatetime media nonbreaking save table contextmenu directionality",
         "emoticons template paste textcolor colorpicker textpattern"
       ],
-      toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media",
-      relative_urls: false,
-      file_picker_callback: function (callback, value, meta) {
-              let x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth;
-              let y = window.innerHeight|| document.documentElement.clientHeight|| document.getElementsByTagName('body')[0].clientHeight;
+  toolbar:"insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media",
+  // enable title field in the Image dialog
+  image_title: true, 
+  // enable automatic uploads of images represented by blob or data URIs
+  automatic_uploads: true,
+  // add custom filepicker only to Image dialog
+  file_picker_types: 'image',
+  file_picker_callback: function(cb, value, meta) {
+    var input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
 
-              let type = 'image' === meta.filetype ? 'Images' : 'Files',
-                  url  = editor_config.path_absolute + 'laravel-filemanager?editor=tinymce5&type=' + type;
+    input.onchange = function() {
+      var file = this.files[0];
+      var reader = new FileReader();
+      
+      reader.onload = function () {
+        var id = 'blobid' + (new Date()).getTime();
+        var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+        var base64 = reader.result.split(',')[1];
+        var blobInfo = blobCache.create(id, file, base64);
+        blobCache.add(blobInfo);
 
-              tinymce.activeEditor.windowManager.openUrl({
-                  url : url,
-                  title : 'Filemanager',
-                  width : x * 0.8,
-                  height : y * 0.8,
-                  onMessage: (api, message) => {
-                      callback(message.content);
-                  }
-              });
-          }
+        // call the callback and populate the Title field with the file name
+        cb(blobInfo.blobUri(), { title: file.name });
+      };
+      reader.readAsDataURL(file);
     };
-
-    tinymce.init(editor_config);
+    
+    input.click();
+  }
+  });
 </script>
 @endsection
