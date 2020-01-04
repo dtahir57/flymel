@@ -42,6 +42,18 @@
                     @enderror
                   </div>
                 </div>
+                <h4>Status</h4>
+                <hr>
+                <div class="card-block">
+                    <div class="input-group skin skin-square">
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                          <fieldset>
+                          <input  type="checkbox" name="is_active" value="1" @if($news->is_active == 1) checked @endif>
+                          <label for="permission">Is_Active</label>
+                          </fieldset>
+                        </div>
+                    </div>
+                </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
                   <button type="submit" class="btn btn-primary">Edit</button>

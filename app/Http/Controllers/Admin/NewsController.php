@@ -88,6 +88,14 @@ class NewsController extends Controller
     {
         $news=News::find($id);
         $news->title=$request->title;
+        if($request->is_active == null)
+        {
+            $news->is_active=false;
+        }
+        else
+        {
+            $news->is_active=$request->is_active;
+        }
         $news->update();
         if($news)
         {

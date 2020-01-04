@@ -49,6 +49,7 @@
                 <tr>
                   <th>Id</th>
                   <th>Title</th>
+                  <th>Status</th>
                   <th>Created_At</th>
                   <th>Actions</th>
                 </tr>
@@ -58,6 +59,7 @@
                 <tr>
                   <td>{{$loop->iteration}}</td>
                   <td>{{$new->title}}</td>
+                  <td>@if($new->is_active == 1)Active @else Not Active @endif</td>
                   <td>{{$new->created_at}}</td>
                   <td>
                   <a href="{{route('news.edit',$new->id)}}" role="button" class="btn"><i class="fa fa-edit text-primary"></i></a>
@@ -71,6 +73,7 @@
                 <tr>
                   <th>Id</th>
                   <th>Title</th>
+                  <th>Status</th>
                   <th>Created_At</th>
                   <th>Actions</th>
                 </tr>
