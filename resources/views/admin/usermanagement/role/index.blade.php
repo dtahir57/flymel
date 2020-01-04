@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','Blogs')
+@section('title','Roles')
 @section('style')
 <!-- DataTables -->
 <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.css">
@@ -11,12 +11,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Blogs</h1>
+            <h1 class="m-0 text-dark">Roles</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{route('admin.home')}}">Home</a></li>
-              <li class="breadcrumb-item active">Blogs</li>
+              <li class="breadcrumb-item active">Roles</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -30,8 +30,8 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">List of blogs</h3>
-              <a href="{{route('blog.create')}}" role="button" class="btn btn-primary float-right"><i class="fa fa-plus"></i> Create New</a>
+              <h3 class="card-title">List of roles</h3>
+              <a href="{{route('role.create')}}" role="button" class="btn btn-primary float-right"><i class="fa fa-plus"></i> Create New</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -48,21 +48,21 @@
                 <thead>
                 <tr>
                   <th>Id</th>
-                  <th>Title</th>
+                  <th>Name</th>
                   <th>Created_At</th>
                   <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($blogs as $blog)
+                @foreach($roles as $role)
                 <tr>
                   <td>{{$loop->iteration}}</td>
-                  <td>{{$blog->title}}</td>
-                  <td>{{$blog->created_at}}</td>
+                  <td>{{$role->name}}</td>
+                  <td>{{$role->created_at}}</td>
                   <td>
-                  <a href="{{route('blog.edit',$blog->id)}}" role="button" class="btn"><i class="fa fa-edit text-primary"></i></a>
+                  <a href="{{route('role.edit',$role->id)}}" role="button" class="btn"><i class="fa fa-edit text-primary"></i></a>
                   /
-                  <a href="" role="button" class="btn remove" data-toggle="modal" data-target="#modal-danger" data-id="{{$blog->id}}" data-url="{{route('blog.destroy',$blog->id)}}"><i class="fa fa-trash text-danger"></i></a>
+                  <a href="" role="button" class="btn remove" data-toggle="modal" data-target="#modal-danger" data-id="{{$role->id}}" data-url="{{route('role.destroy',$role->id)}}"><i class="fa fa-trash text-danger"></i></a>
                   </td>
                 </tr>
                @endforeach
@@ -70,7 +70,7 @@
                 <tfoot>
                 <tr>
                   <th>Id</th>
-                  <th>Title</th>
+                  <th>Name</th>
                   <th>Created_At</th>
                   <th>Actions</th>
                 </tr>
@@ -93,13 +93,13 @@
         <div class="modal-dialog">
           <div class="modal-content bg-danger">
             <div class="modal-header">
-              <h4 class="modal-title">Delete Blog</h4>
+              <h4 class="modal-title">Delete Role</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-              <p>Are you sure,you want to delete this blog?</p>
+              <p>Are you sure,you want to delete this role?</p>
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-outline-light form-data" data-dismiss="modal">Close</button>

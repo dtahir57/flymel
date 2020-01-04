@@ -35,7 +35,7 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label>Title</label>
-                    <input type="text" class="form-control"  name="title" id="title"  placeholder="Enter Title">
+                    <input type="text" class="form-control" required name="title" id="title"  placeholder="Enter Title">
                     @error('title')
                         <span class="text-danger">{{$message}}</span>
                     @enderror

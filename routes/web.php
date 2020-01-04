@@ -37,6 +37,27 @@ Route::group(['prefix'=>'/admin','middleware'=>['auth','role:Super_User']],funct
     Route::patch('news/update/{news}','Admin\NewsController@update')->name('news.update');
     Route::delete('news/delete/{news}','Admin\NewsController@destroy')->name('news.destroy');
 
+    Route::get('permissions','Admin\UserManagement\PermissionController@index')->name('permission.index');
+    Route::get('permissions/create','Admin\UserManagement\PermissionController@create')->name('permission.create');
+    Route::post('permissions/store','Admin\UserManagement\PermissionController@store')->name('permission.store');
+    Route::get('permissions/edit/{permission}','Admin\UserManagement\PermissionController@edit')->name('permission.edit');
+    Route::patch('permissions/update/{permission}','Admin\UserManagement\PermissionController@update')->name('permission.update');
+    Route::delete('permissions/delete/{permission}','Admin\UserManagement\PermissionController@destroy')->name('permission.destroy');
+
+    Route::get('roles','Admin\UserManagement\RoleController@index')->name('role.index');
+    Route::get('roles/create','Admin\UserManagement\RoleController@create')->name('role.create');
+    Route::post('roles/store','Admin\UserManagement\RoleController@store')->name('role.store');
+    Route::get('roles/edit/{role}','Admin\UserManagement\RoleController@edit')->name('role.edit');
+    Route::patch('roles/update/{role}','Admin\UserManagement\RoleController@update')->name('role.update');
+    Route::delete('roles/delete/{role}','Admin\UserManagement\RoleController@destroy')->name('role.destroy');
+
+    Route::get('users','Admin\UserManagement\UserController@index')->name('user.index');
+    Route::get('users/create','Admin\UserManagement\UserController@create')->name('user.create');
+    Route::post('users/store','Admin\UserManagement\UserController@store')->name('user.store');
+    Route::get('users/edit/{user}','Admin\UserManagement\UserController@edit')->name('user.edit');
+    Route::patch('users/update/{user}','Admin\UserManagement\UserController@update')->name('user.update');
+    Route::delete('users/delete/{user}','Admin\UserManagement\UserController@destroy')->name('user.destroy');
+
 }
 );
 
