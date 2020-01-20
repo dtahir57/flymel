@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
+use App\Profile;
 use Auth;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Role;
 
 class RegisterController extends Controller
 {
@@ -37,6 +39,10 @@ class RegisterController extends Controller
          if(Auth::user()->hasRole('Super_User'))
          {
              return '/admin/home';
+         }
+         else if(Auth::user()->hasRole('User'))
+         {
+             return '/user/home';
          }
          else
          {
@@ -76,10 +82,15 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user= User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+        $user->assignRole('User');
+        $profile=new Profile;
+        $profile->user_id=$user->id;
+        $profile->save();
+        return $user;
     }
 }

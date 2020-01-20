@@ -61,3 +61,14 @@ Route::group(['prefix'=>'/admin','middleware'=>['auth','role:Super_User']],funct
 }
 );
 
+Route::group(['prefix'=>'/user','middleware'=>['auth','role:User']],function()
+{
+    Route::get('home','User\UserController@index')->name('user.home');
+    Route::get('bookinghistory','User\UserController@bookinghistory')->name('user.bookinghistory');
+    Route::get('contactsupport','User\UserController@contactsupport')->name('user.contactsupport');
+    Route::post('message','User\UserController@message')->name('user.message');
+    Route::get('profile','User\UserController@profile')->name('user.profile');
+    Route::patch('updateprofile','User\UserController@updateprofile')->name('user.updateprofile');
+}
+);
+

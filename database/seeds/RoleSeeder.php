@@ -14,5 +14,8 @@ class RoleSeeder extends Seeder
         $role=new Role;
         $role->name="Super_User";
         $role->save();
+        $role=new Role;
+        $role->name="User";
+        $role->save();
     }
 }
